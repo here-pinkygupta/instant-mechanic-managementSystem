@@ -26,9 +26,17 @@ import { databaseReady } from "./config/database";
 
 const app = express();
 
+// --------------------------------------------------
+// EXPRESS / RENDER PROXY
+// --------------------------------------------------
+
 app.set("trust proxy", 1);
 
 app.disable("x-powered-by");
+
+// --------------------------------------------------
+// SECURITY
+// --------------------------------------------------
 
 app.use(helmet());
 
@@ -38,13 +46,15 @@ app.use(helmet());
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://instant-mechanic-management-system-d8ar8egm9.vercel.app",
+  "https://instant-mechanic-management-system.vercel.app",
   env.frontendUrl,
 ].filter(Boolean);
 
 app.use(
   cors({
     origin: (origin, callback) => {
+      // Allow requests without an Origin header
+      // such as health checks/server-to-server requests.
       if (!origin) {
         return callback(null, true);
       }
@@ -55,9 +65,22 @@ app.use(
 
       return callback(new Error(`CORS blocked origin: ${origin}`));
     },
+
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
+
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
   })
 );
 
@@ -65,7 +88,11 @@ app.use(
 // BODY PARSING
 // --------------------------------------------------
 
-app.use(express.json({ limit: "1mb" }));
+app.use(
+  express.json({
+    limit: "1mb",
+  })
+);
 
 app.use(
   express.urlencoded({

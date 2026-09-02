@@ -38,15 +38,13 @@ app.use(helmet());
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "https://instant-mechanic-management-system-d8ar8egm9.vercel.app",
   env.frontendUrl,
-  "https://instant-mechanic-management-system-gnantizc5.vercel.app",
 ].filter(Boolean);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests without an Origin header
-      // (Postman, server-to-server requests, etc.)
       if (!origin) {
         return callback(null, true);
       }
@@ -55,24 +53,11 @@ app.use(
         return callback(null, true);
       }
 
-      return callback(new Error("Not allowed by CORS"));
+      return callback(new Error(`CORS blocked origin: ${origin}`));
     },
-
     credentials: true,
-
-    methods: [
-      "GET",
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE",
-      "OPTIONS",
-    ],
-
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 

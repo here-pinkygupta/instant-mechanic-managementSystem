@@ -1,0 +1,1 @@
+import {Router} from "express"; import {list} from "../controllers/audit.controller"; import {requireAuth,requireRoles} from "../middleware/auth.middleware"; import {asyncHandler} from "../utils/asyncHandler"; const r=Router();r.get("/",requireAuth,requireRoles("ADMIN"),asyncHandler(list));export default r;

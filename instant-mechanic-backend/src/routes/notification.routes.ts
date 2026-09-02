@@ -1,0 +1,1 @@
+import {Router} from "express"; import * as c from "../controllers/notification.controller"; import {requireAuth} from "../middleware/auth.middleware"; import {asyncHandler} from "../utils/asyncHandler"; const r=Router();r.use(requireAuth);r.get("/",asyncHandler(c.list));r.patch("/:id/read",asyncHandler(c.read));export default r;

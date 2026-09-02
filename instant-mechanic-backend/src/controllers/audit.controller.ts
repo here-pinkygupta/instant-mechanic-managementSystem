@@ -1,0 +1,1 @@
+import type {RequestHandler} from "express"; import {AuditLog} from "../models/AuditLog"; import {success} from "../utils/apiResponse"; export const list:RequestHandler=async(req,res)=>success(res,await AuditLog.find().sort({createdAt:-1}).limit(100).populate("user","name email role").lean(),"Audit logs retrieved successfully");

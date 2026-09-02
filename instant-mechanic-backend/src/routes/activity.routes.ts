@@ -1,0 +1,1 @@
+import {Router} from "express"; import {list} from "../controllers/activity.controller"; import {requireAuth} from "../middleware/auth.middleware"; import {asyncHandler} from "../utils/asyncHandler"; const r=Router();r.get("/",requireAuth,asyncHandler(list));export default r;

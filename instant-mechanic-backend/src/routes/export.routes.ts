@@ -1,0 +1,1 @@
+import {Router} from "express"; import {bookingsCsv} from "../controllers/export.controller"; import {requireAuth,requireRoles} from "../middleware/auth.middleware"; import {asyncHandler} from "../utils/asyncHandler"; const r=Router();r.get("/bookings",requireAuth,requireRoles("ADMIN","OPERATIONS"),asyncHandler(bookingsCsv));export default r;

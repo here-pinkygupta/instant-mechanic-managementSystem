@@ -1,0 +1,1 @@
+import {Router} from "express"; import * as c from "../controllers/customer.controller"; import {requireAuth,requireRoles} from "../middleware/auth.middleware"; import {asyncHandler} from "../utils/asyncHandler"; const r=Router();r.use(requireAuth,requireRoles("ADMIN","OPERATIONS"));r.get("/",asyncHandler(c.list));r.get("/:id",asyncHandler(c.detail));export default r;

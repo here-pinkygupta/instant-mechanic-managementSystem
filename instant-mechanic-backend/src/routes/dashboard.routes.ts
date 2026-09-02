@@ -1,0 +1,1 @@
+import {Router} from "express"; import {getDashboard} from "../controllers/dashboard.controller"; import {requireAuth,requireRoles} from "../middleware/auth.middleware"; import {asyncHandler} from "../utils/asyncHandler"; const r=Router();r.get("/",requireAuth,requireRoles("ADMIN","OPERATIONS"),asyncHandler(getDashboard));export default r;

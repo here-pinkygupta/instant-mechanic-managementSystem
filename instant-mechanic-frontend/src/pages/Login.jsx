@@ -45,12 +45,19 @@ export default function Login() {
 
       navigate("/dashboard");
     } catch (err) {
-      setError(
-        err.response?.data?.message ||
-          err.response?.data?.error ||
-          "Invalid email or password"
-      );
-    } finally {
+  const data = err?.response?.data;
+
+  const message =
+    typeof data?.message === "string"
+      ? data.message
+      : typeof data?.error?.message === "string"
+        ? data.error.message
+        : typeof data?.error === "string"
+          ? data.error
+          : "Invalid email or password";
+
+  setError(message);
+} finally {
       setLoading(false);
     }
   };
@@ -165,6 +172,12 @@ export default function Login() {
     Create an account
   </Link>
 </div>
+
+{error && (
+  <div className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+    {error}
+  </div>
+)}
           </form>
         </div>
       </div>
